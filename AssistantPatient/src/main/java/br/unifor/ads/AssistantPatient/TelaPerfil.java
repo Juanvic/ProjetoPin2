@@ -7,6 +7,14 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
 
 public class TelaPerfil extends JInternalFrame {
 
@@ -41,28 +49,44 @@ public class TelaPerfil extends JInternalFrame {
 		getContentPane().add(lblPerfil);
 		
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(25, 81, 46, 14);
+		lblNome.setBounds(25, 41, 46, 14);
 		getContentPane().add(lblNome);
 		
 		JLabel lblId = new JLabel("Id:");
-		lblId.setBounds(25, 119, 46, 14);
+		lblId.setBounds(25, 67, 46, 14);
 		getContentPane().add(lblId);
 		
 		JLabel lblLogin = new JLabel("Login:");
-		lblLogin.setBounds(25, 163, 46, 14);
+		lblLogin.setBounds(25, 101, 46, 14);
 		getContentPane().add(lblLogin);
 		
 		JLabel lblNome_1 = new JLabel("Nome");
-		lblNome_1.setBounds(81, 81, 46, 14);
+		lblNome_1.setBounds(116, 41, 46, 14);
 		getContentPane().add(lblNome_1);
 		
 		JLabel lblIdmedico = new JLabel("Id_Medico");
-		lblIdmedico.setBounds(81, 119, 81, 14);
+		lblIdmedico.setBounds(116, 67, 81, 14);
 		getContentPane().add(lblIdmedico);
 		
 		JLabel lblLogin_1 = new JLabel("Login");
-		lblLogin_1.setBounds(81, 163, 46, 14);
+		lblLogin_1.setBounds(116, 101, 46, 14);
 		getContentPane().add(lblLogin_1);
 
+		Connection con = new ConnectionFactory().getConnection();
+        Statement stmt;
+		try {
+			stmt = con.createStatement();
+	        String sql = "SELECT medico, login, senha FROM medicos";
+	        System.out.println(sql);
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while (rs.next()) {
+	        	String bdNome = rs.getString("medico");
+	        	String bdLogin = rs.getString("login");
+	        
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		
 	}
 }

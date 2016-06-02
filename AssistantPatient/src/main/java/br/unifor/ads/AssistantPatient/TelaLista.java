@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
 
 public class TelaLista extends JInternalFrame {
 
@@ -51,7 +53,7 @@ public class TelaLista extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaLista() {
-		setClosable(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 739, 433);
 		getContentPane().setLayout(null);
 		
@@ -60,9 +62,9 @@ public class TelaLista extends JInternalFrame {
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(6, 66, 61, 16);
-		getContentPane().add(lblNewLabel);
+		JLabel lblPesquisa = new JLabel("Pesquisa:");
+		lblPesquisa.setBounds(6, 66, 61, 16);
+		getContentPane().add(lblPesquisa);
 		
 		tabelaLista = new JTable();
 		DefaultTableModel model = new DefaultTableModel(){
@@ -75,24 +77,16 @@ public class TelaLista extends JInternalFrame {
 		       return false;
 		    }
 		};
-		model.addColumn("Médico");
-		model.addColumn("Login");
+		model.addColumn("Data");
+		model.addColumn("Sala");
 
-		Connection con = new ConnectionFactory().getConnection();
-        Statement stmt;
-		try {
-			stmt = con.createStatement();
-	        String sql = "SELECT medico, login, senha FROM medicos";
-	        System.out.println(sql);
-	        ResultSet rs = stmt.executeQuery(sql);
-	        while (rs.next()) {
-	        	String bdNome = rs.getString("medico");
-	        	String bdLogin = rs.getString("login");
-	        	
-	        	model.addRow(new Object[] {bdNome,bdLogin});
-	        }
-		} catch (SQLException e) {
-			e.printStackTrace();
+		AgendaDAO dao = new AgendaDAO();
+		List<Agenda> listaDeAgendas = dao.listarTodos();
+		String[][] arrAgendas = dao.listToArray(listaDeAgendas);
+		System.out.println(arrAgendas);
+		
+		for(String[] aS : arrAgendas){
+			model.addRow(aS);
 		}
 
 		tabelaLista.setModel(model);
@@ -105,12 +99,12 @@ public class TelaLista extends JInternalFrame {
 		menuBar.setBounds(0, 1, 800, 53);
 		getContentPane().add(menuBar);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Teste 1");
-		menuBar.add(mntmNewMenuItem_1);
+		JMenuItem mntmConsultasMarcadas = new JMenuItem("Consultas Marcadas");
+		menuBar.add(mntmConsultasMarcadas);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Teste 2");
-		mntmNewMenuItem.setIcon(new ImageIcon(TelaLista.class.getResource("/javax/swing/plaf/basic/icons/image-delayed.png")));
-		menuBar.add(mntmNewMenuItem);
+		JMenuItem mntmConsultasDesmarcadas = new JMenuItem("Consultas Desmarcadas");
+		mntmConsultasDesmarcadas.setIcon(new ImageIcon(TelaLista.class.getResource("/javax/swing/plaf/basic/icons/image-delayed.png")));
+		menuBar.add(mntmConsultasDesmarcadas);
 		
 
 	}

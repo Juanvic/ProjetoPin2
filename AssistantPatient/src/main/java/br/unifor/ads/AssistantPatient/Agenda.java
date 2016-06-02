@@ -4,11 +4,11 @@ package br.unifor.ads.AssistantPatient;
 
 public class Agenda {
 
-	private double data;
+	private String data;
 	private double horario;
 	private String sala; 	//private boolean status;
 
-	public Agenda(double data, double horario, String sala) {
+	public Agenda(String data, double horario, String sala) {
 		super();
 		this.data = data;
 		this.horario = horario;
@@ -19,10 +19,10 @@ public class Agenda {
 		super();
 	}
 
-	public double getData() {
+	public String getData() {
 		return data;
 	}
-	public void setData(double data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 	public double getHorario() {

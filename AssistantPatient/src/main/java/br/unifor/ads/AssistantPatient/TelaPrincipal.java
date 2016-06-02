@@ -42,6 +42,8 @@ public class TelaPrincipal extends JFrame {
 	private JMenuItem mntmListaConsultas;
 	private JMenu mnMedicos;
 	private JMenuItem mntmPerfil;
+	private JMenu mnPacientes;
+	private JMenuItem mntmListaPacientes;
 
 	/**
 	 * Launch the application.
@@ -102,6 +104,23 @@ public class TelaPrincipal extends JFrame {
 		});
 		mntmPerfil.setHorizontalAlignment(SwingConstants.CENTER);
 		mnMedicos.add(mntmPerfil);
+		
+		mnPacientes = new JMenu("Pacientes");
+		menuBar.add(mnPacientes);
+		
+		JMenuItem mntmListaPacientes = new JMenuItem("Lista Pacientes");
+		mntmListaPacientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaPaciente tPaciente = new TelaPaciente();
+				centerWindow(tPaciente);
+				desktopPane.add(tPaciente);
+				tPaciente.setVisible(true);
+				subWindow = tPaciente;
+			}
+		});
+		mntmListaPacientes.setHorizontalAlignment(SwingConstants.CENTER);
+		mnPacientes.add(mntmListaPacientes);
+		
 		contentPane = new JPanel();
 		contentPane.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -144,6 +163,7 @@ public class TelaPrincipal extends JFrame {
 	public void habilitaMenus(){
 		mnConsultas.setEnabled(true);
 		mnMedicos.setEnabled(true);
+		mnPacientes.setEnabled(true);
 	}
 	
 	public void dadosMedico(String nome, int id){
@@ -151,5 +171,4 @@ public class TelaPrincipal extends JFrame {
 		nomeMedico = nome;
 		idMedico = id;
 	}
-	
 }
